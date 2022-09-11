@@ -9,7 +9,7 @@ class Train:
     words_num, links = {}, {}
 
     def fit(self, file_name):
-        text = open(args.input + '/' + file_name, encoding='utf-8').read().lower()
+        text = open(args.input_dir + '/' + file_name, encoding='utf-8').read().lower()
         text = re.sub('[^a-zа-яё]', ' ', text).split()
         for word in text:
             if word in self.words_num:
@@ -24,7 +24,7 @@ class Train:
             self.links.setdefault(key, []).append(self.words_num[text[i]])
 
     def read_files(self):
-        files = os.listdir(args.input)
+        files = os.listdir(args.input_dir)
         for file in files:
             self.fit(file)
 
@@ -36,7 +36,7 @@ class Train:
 
 
 parser = argparse.ArgumentParser(description="Train Model for Text Generation")
-parser.add_argument("-d", "--input", type=str, metavar='', help="path to the directory containing the collection of documents")
+parser.add_argument("-d", "--input-dir", type=str, metavar='', required=True, help="path to the directory containing the collection of documents")
 parser.add_argument("-m", "--model", type=str, metavar='', required=True, help="path to the file where the model is saved")
 args = parser.parse_args()
 
